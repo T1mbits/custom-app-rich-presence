@@ -1,0 +1,27 @@
+[package]
+name = "custom-app-rp"
+version = "0.0.1"
+edition = "2021"
+
+[[bin]]
+name = "carp"
+path = "src/main.rs"
+
+[dependencies]
+anyhow = "1.0.88"
+clap = { version = "4.5.17", features = ["derive"] }
+dirs = "5.0.1"
+discord-rich-presence = "0.2.4"
+log = "0.4.22"
+serde = { version = "1.0.210", features = ["serde_derive"] }
+serde_json = "1.0.128"
+simplelog = "0.12.2"
+sysinfo = "0.31.4"
+
+# Enable some optimizations in debug mode. Otherwise, it is a pain to test it
+[profile.dev]
+opt-level = 1
+
+# Enable high optimizations for dependencies, but not for our code:
+[profile.dev.package."*"]
+opt-level = 3
