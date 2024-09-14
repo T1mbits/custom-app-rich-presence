@@ -204,8 +204,12 @@ fn edit_process(config: &mut Config, process: String, edits: CliConfigEdit) -> R
 }
 
 fn main() -> Result<()> {
-    let cli = Cli::parse();
     log_init(LevelFilter::Debug);
+
+    if std::env::args_os().len() <= 1 {
+        app_loop(get_config()?);
+    }
+    let cli = Cli::parse();
     let mut config = get_config()?;
 
     match cli.subcommands {
@@ -260,7 +264,7 @@ fn app_loop(config: Config) -> ! {
             }
 
             if last_detected_process == target.process_name {
-                continue;
+                break;
             }
 
             last_detected_process = &target.process_name;
